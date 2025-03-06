@@ -34,23 +34,41 @@ function updateMonth(step: number) {
 
   selectedMonth.value = (selectedMonth.value + step + months.value.length) % months.value.length
 }
+
+function getDaysInMonth(year: number, month: number): number {
+  return new Date(year, month + 1, 0).getDate()
+}
 </script>
 
 <template>
-  <div class="p-10 flex items-center space-x-5">
-    <div class="flex space-x-1">
-      <ChevronLeftIcon
-        @click="updateMonth(-1)"
-        class="h-5 w-5 rounded-md hover:bg-gray-200 cursor-pointer transition items-center"
-      />
-      <ChevronRightIcon
-        @click="updateMonth(1)"
-        class="h-5 w-5 rounded-md hover:bg-gray-200 cursor-pointer transition"
-      />
+  <div class="p-10 flex flex-col space-x-5">
+    <div class="flex items-center">
+      <div class="flex space-x-1">
+        <ChevronLeftIcon
+          @click="updateMonth(-1)"
+          class="h-5 w-5 rounded-md hover:bg-gray-200 cursor-pointer transition items-center"
+        />
+        <ChevronRightIcon
+          @click="updateMonth(1)"
+          class="h-5 w-5 rounded-md hover:bg-gray-200 cursor-pointer transition"
+        />
+      </div>
+      <p class="capitalize text-xl">
+        <span>{{ months[selectedMonth] }}</span>
+        {{ currentYear }}
+      </p>
     </div>
-    <p class="capitalize">
-      <span>{{ months[selectedMonth] }}</span>
-      {{ currentYear }}
-    </p>
+
+    <div class="grid grid-cols-7 p-5">
+      <div
+        class="border"
+        v-for="(day, index) in getDaysInMonth(Number(currentYear), selectedMonth)"
+        :key="day"
+      >
+        <div :style="{ height: `${100 / 6}vh`, width: `${100 / 7}vw` }">
+          {{ index + 1 }}
+        </div>
+      </div>
+    </div>
   </div>
 </template>
