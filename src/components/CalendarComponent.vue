@@ -38,11 +38,21 @@ function updateMonth(step: number) {
 function getDaysInMonth(year: number, month: number): number {
   return new Date(year, month + 1, 0).getDate()
 }
+
+function goToCurrentMonth() {
+  selectedMonth.value = currentDate.value.getMonth()
+}
 </script>
 
 <template>
-  <div class="p-10 flex flex-col space-x-5">
-    <div class="flex items-center">
+  <div class="p-10 flex flex-col">
+    <div class="flex items-center space-x-5">
+      <button
+        @click="goToCurrentMonth"
+        class="bg-white hover:bg-gray-100 text-gray-800 py-2 px-4 border border-gray-400 rounded-xl shadow"
+      >
+        Aujourd'hui
+      </button>
       <div class="flex space-x-1">
         <ChevronLeftIcon
           @click="updateMonth(-1)"
