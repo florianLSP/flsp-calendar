@@ -26,6 +26,12 @@ const currentYear = ref(
 const selectedMonth = ref(months.value.indexOf(currentMonth.value))
 
 function updateMonth(step: number) {
+  if (selectedMonth.value == 0 && step == -1) {
+    currentYear.value = (parseInt(currentYear.value) - 1).toString()
+  } else if (selectedMonth.value == 11 && step == 1) {
+    currentYear.value = (parseInt(currentYear.value) + 1).toString()
+  }
+
   selectedMonth.value = (selectedMonth.value + step + months.value.length) % months.value.length
 }
 </script>
