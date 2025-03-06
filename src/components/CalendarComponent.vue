@@ -2,6 +2,20 @@
 import { ref } from 'vue'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/solid'
 
+const months = ref([
+  'janvier',
+  'février',
+  'mars',
+  'avril',
+  'mai',
+  'juin',
+  'juillet',
+  'août',
+  'septembre',
+  'octobre',
+  'novembre',
+  'décembre',
+])
 const currentDate = ref(new Date())
 const currentMonth = ref(
   new Intl.DateTimeFormat('fr-FR', { month: 'long' }).format(currentDate.value),
@@ -9,31 +23,28 @@ const currentMonth = ref(
 const currentYear = ref(
   new Intl.DateTimeFormat('fr-FR', { year: 'numeric' }).format(currentDate.value),
 )
+const selectedMonth = ref(months.value.indexOf(currentMonth.value))
 
-const months = ref([
-  'Janvier',
-  'Février',
-  'Mars',
-  'Avril',
-  'Mai',
-  'Juin',
-  'Juillet',
-  'Août',
-  'Septembre',
-  'Octobre',
-  'Novembre',
-  'Décembre',
-])
+function updateMonth(step: number) {
+  selectedMonth.value = (selectedMonth.value + step + months.value.length) % months.value.length
+}
 </script>
 
 <template>
   <div class="p-10 flex items-center space-x-5">
     <div class="flex space-x-1">
       <ChevronLeftIcon
+        @click="updateMonth(-1)"
         class="h-5 w-5 rounded-md hover:bg-gray-200 cursor-pointer transition items-center"
       />
-      <ChevronRightIcon class="h-5 w-5 rounded-md hover:bg-gray-200 cursor-pointer transition" />
+      <ChevronRightIcon
+        @click="updateMonth(1)"
+        class="h-5 w-5 rounded-md hover:bg-gray-200 cursor-pointer transition"
+      />
     </div>
-    <p class="capitalize">{{ currentMonth }} {{ currentYear }}</p>
+    <p class="capitalize">
+      <span>{{ months[selectedMonth] }}</span>
+      {{ currentYear }}
+    </p>
   </div>
 </template>
