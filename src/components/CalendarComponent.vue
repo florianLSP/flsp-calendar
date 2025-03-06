@@ -76,7 +76,7 @@ function goToCurrentMonth() {
         :key="day"
       >
         <div :style="{ height: `${100 / 6}vh`, width: `${100 / 7}vw` }">
-          {{ index + 1 }}
+          <p class="p-2">{{ index + 1 }}</p>
         </div>
       </div>
     </div>
