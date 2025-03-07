@@ -17,6 +17,9 @@ const months = ref([
   'décembre',
 ])
 const currentDate = ref(new Date())
+const currentDay = ref(
+  new Intl.DateTimeFormat('fr-FR', { day: 'numeric' }).format(currentDate.value),
+)
 const currentMonth = ref(
   new Intl.DateTimeFormat('fr-FR', { month: 'long' }).format(currentDate.value),
 )
@@ -86,7 +89,10 @@ function goToCurrentMonth() {
         :key="day"
       >
         <div :style="{ height: `${100 / 6}vh`, width: `${100 / 7}vw` }">
-          <p class="p-2">{{ index + 1 }}</p>
+          <p v-if="index + 1 === Number(currentDay)" class="p-2 font-bold">
+            {{ index + 1 }}
+          </p>
+          <p v-else class="p-2">{{ index + 1 }}</p>
         </div>
       </div>
     </div>
