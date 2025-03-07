@@ -69,6 +69,16 @@ function goToCurrentMonth() {
       </p>
     </div>
 
+    <div class="grid grid-cols-7 pt-5 font-bold text-center">
+      <div>Lun</div>
+      <div>Mar</div>
+      <div>Mer</div>
+      <div>Jeu</div>
+      <div>Ven</div>
+      <div>Sam</div>
+      <div>Dim</div>
+    </div>
+
     <div class="grid grid-cols-7 p-5">
       <div
         class="border"
