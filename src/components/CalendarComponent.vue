@@ -48,7 +48,7 @@ function goToCurrentMonth() {
 </script>
 
 <template>
-  <div class="p-10 flex flex-col">
+  <div class="p-10 flex flex-col" :style="{ height: '100vh' }">
     <div class="flex items-center space-x-5">
       <button
         @click="goToCurrentMonth"
