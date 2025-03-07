@@ -27,12 +27,13 @@ const currentYear = ref(
   new Intl.DateTimeFormat('fr-FR', { year: 'numeric' }).format(currentDate.value),
 )
 const selectedMonth = ref(months.value.indexOf(currentMonth.value))
+const selectedYear = ref(Number(currentYear.value))
 
 function updateMonth(step: number) {
   if (selectedMonth.value == 0 && step == -1) {
-    currentYear.value = (parseInt(currentYear.value) - 1).toString()
+    selectedYear.value = parseInt(currentYear.value) - 1
   } else if (selectedMonth.value == 11 && step == 1) {
-    currentYear.value = (parseInt(currentYear.value) + 1).toString()
+    selectedYear.value = parseInt(currentYear.value) + 1
   }
 
   selectedMonth.value = (selectedMonth.value + step + months.value.length) % months.value.length
@@ -44,6 +45,11 @@ function getDaysInMonth(year: number, month: number): number {
 
 function goToCurrentMonth() {
   selectedMonth.value = currentDate.value.getMonth()
+}
+
+function getFirstDayOfMonth(year: number, month: number) {
+  const day = new Date(year, month, 1).getDay()
+  return day === 0 ? 6 : day - 1
 }
 </script>
 
@@ -84,11 +90,16 @@ function goToCurrentMonth() {
 
     <div class="grid grid-cols-7 p-5">
       <div
+        v-for="firstDay in getFirstDayOfMonth(selectedYear, selectedMonth)"
+        :key="firstDay"
+        class="border border-gray-300 bg-gray-200"
+      ></div>
+      <div
         class="border"
         v-for="(day, index) in getDaysInMonth(Number(currentYear), selectedMonth)"
         :key="day"
       >
-        <div :style="{ height: `${100 / 6}vh`, width: `${100 / 7}vw` }">
+        <div :style="{ height: `${100 / 7}vh`, width: `${100 / 7}vw` }">
           <p v-if="index + 1 === Number(currentDay)" class="p-2 font-bold">
             {{ index + 1 }}
           </p>
