@@ -100,7 +100,10 @@ function getFirstDayOfMonth(year: number, month: number) {
         :key="day"
       >
         <div :style="{ height: `${100 / 7}vh`, width: `${100 / 7}vw` }">
-          <p v-if="index + 1 === Number(currentDay)" class="p-2 font-bold">
+          <p
+            v-if="index === Number(currentDay) - 1 && months[selectedMonth] == currentMonth"
+            class="p-2 font-bold"
+          >
             {{ index + 1 }}
           </p>
           <p v-else class="p-2">{{ index + 1 }}</p>
