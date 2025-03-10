@@ -1,42 +1,18 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/solid'
+import { useCalendarStore } from '@/stores/calendar'
 
-const months = ref([
-  'janvier',
-  'février',
-  'mars',
-  'avril',
-  'mai',
-  'juin',
-  'juillet',
-  'août',
-  'septembre',
-  'octobre',
-  'novembre',
-  'décembre',
-])
-const currentDate = ref(new Date())
-const currentDay = ref(
-  new Intl.DateTimeFormat('fr-FR', { day: 'numeric' }).format(currentDate.value),
-)
-const currentMonth = ref(
-  new Intl.DateTimeFormat('fr-FR', { month: 'long' }).format(currentDate.value),
-)
-const currentYear = ref(
-  new Intl.DateTimeFormat('fr-FR', { year: 'numeric' }).format(currentDate.value),
-)
-const selectedMonth = ref(months.value.indexOf(currentMonth.value))
-const selectedYear = ref(Number(currentYear.value))
+const calendarStore = useCalendarStore()
 
 function updateMonth(step: number) {
-  if (selectedMonth.value == 0 && step == -1) {
-    selectedYear.value = parseInt(currentYear.value) - 1
-  } else if (selectedMonth.value == 11 && step == 1) {
-    selectedYear.value = parseInt(currentYear.value) + 1
+  if (calendarStore.selectedMonth == 0 && step == -1) {
+    calendarStore.selectedYear = parseInt(calendarStore.currentYear) - 1
+  } else if (calendarStore.selectedMonth == 11 && step == 1) {
+    calendarStore.selectedYear = parseInt(calendarStore.currentYear) + 1
   }
 
-  selectedMonth.value = (selectedMonth.value + step + months.value.length) % months.value.length
+  calendarStore.selectedMonth =
+    (calendarStore.selectedMonth + step + calendarStore.months.length) % calendarStore.months.length
 }
 
 function getDaysInMonth(year: number, month: number): number {
@@ -44,7 +20,7 @@ function getDaysInMonth(year: number, month: number): number {
 }
 
 function goToCurrentMonth() {
-  selectedMonth.value = currentDate.value.getMonth()
+  calendarStore.selectedMonth = calendarStore.currentDate.getMonth()
 }
 
 function getFirstDayOfMonth(year: number, month: number) {
@@ -73,8 +49,8 @@ function getFirstDayOfMonth(year: number, month: number) {
         />
       </div>
       <p class="capitalize text-xl">
-        <span>{{ months[selectedMonth] }}</span>
-        {{ currentYear }}
+        <span>{{ calendarStore.months[calendarStore.selectedMonth] }}</span>
+        {{ calendarStore.currentYear }}
       </p>
     </div>
 
@@ -90,18 +66,27 @@ function getFirstDayOfMonth(year: number, month: number) {
 
     <div class="grid grid-cols-7 p-5">
       <div
-        v-for="firstDay in getFirstDayOfMonth(selectedYear, selectedMonth)"
+        v-for="firstDay in getFirstDayOfMonth(
+          calendarStore.selectedYear,
+          calendarStore.selectedMonth,
+        )"
         :key="firstDay"
         class="border border-gray-300 bg-gray-200"
       ></div>
       <div
         class="border"
-        v-for="(day, index) in getDaysInMonth(Number(currentYear), selectedMonth)"
+        v-for="(day, index) in getDaysInMonth(
+          Number(calendarStore.currentYear),
+          calendarStore.selectedMonth,
+        )"
         :key="day"
       >
         <div :style="{ height: `${100 / 7}vh`, width: `${100 / 7}vw` }">
           <p
-            v-if="index === Number(currentDay) - 1 && months[selectedMonth] == currentMonth"
+            v-if="
+              index === Number(calendarStore.currentDay) - 1 &&
+              calendarStore.months[calendarStore.selectedMonth] == calendarStore.currentMonth
+            "
             class="p-2 font-bold"
           >
             {{ index + 1 }}
