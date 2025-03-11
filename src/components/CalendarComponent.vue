@@ -2,15 +2,12 @@
 import { useCalendarStore } from '@/stores/calendar'
 import MonthNavigation from './MonthNavigation.vue'
 import DateDisplay from './DateDisplay.vue'
+import CurrentMonthBtn from './CurrentMonthBtn.vue'
 
 const calendarStore = useCalendarStore()
 
 function getDaysInMonth(year: number, month: number): number {
   return new Date(year, month + 1, 0).getDate()
-}
-
-function goToCurrentMonth() {
-  calendarStore.selectedMonth = calendarStore.currentDate.getMonth()
 }
 
 function getFirstDayOfMonth(year: number, month: number) {
@@ -22,12 +19,7 @@ function getFirstDayOfMonth(year: number, month: number) {
 <template>
   <div class="p-10 flex flex-col" :style="{ height: '100vh' }">
     <div class="flex items-center space-x-5">
-      <button
-        @click="goToCurrentMonth"
-        class="bg-white hover:bg-gray-100 text-gray-800 py-2 px-4 border border-gray-400 rounded-xl shadow"
-      >
-        Aujourd'hui
-      </button>
+      <CurrentMonthBtn />
       <MonthNavigation />
       <DateDisplay />
     </div>
