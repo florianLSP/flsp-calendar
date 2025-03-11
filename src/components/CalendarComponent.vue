@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useCalendarStore } from '@/stores/calendar'
 import MonthNavigation from './MonthNavigation.vue'
+import DateDisplay from './DateDisplay.vue'
 
 const calendarStore = useCalendarStore()
 
@@ -28,10 +29,7 @@ function getFirstDayOfMonth(year: number, month: number) {
         Aujourd'hui
       </button>
       <MonthNavigation />
-      <p class="capitalize text-xl">
-        <span>{{ calendarStore.months[calendarStore.selectedMonth] }}</span>
-        {{ calendarStore.currentYear }}
-      </p>
+      <DateDisplay />
     </div>
 
     <div class="grid grid-cols-7 pt-5 font-bold text-center">
