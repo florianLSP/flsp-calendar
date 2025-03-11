@@ -6,9 +6,9 @@ const calendarStore = useCalendarStore()
 
 function updateMonth(step: number) {
   if (calendarStore.selectedMonth == 0 && step == -1) {
-    calendarStore.selectedYear = parseInt(calendarStore.currentYear) - 1
+    calendarStore.selectedYear = calendarStore.selectedYear - 1
   } else if (calendarStore.selectedMonth == 11 && step == 1) {
-    calendarStore.selectedYear = parseInt(calendarStore.currentYear) + 1
+    calendarStore.selectedYear = calendarStore.selectedYear + 1
   }
 
   calendarStore.selectedMonth =
