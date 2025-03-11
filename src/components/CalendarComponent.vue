@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useCalendarStore } from '@/stores/calendar'
-import MonthNavigation from './MonthNavigation.vue'
-import DateDisplay from './DateDisplay.vue'
-import CurrentMonthBtn from './CurrentMonthBtn.vue'
+import MonthNavigation from './header/MonthNavigation.vue'
+import DateDisplay from './header/DateDisplay.vue'
+import CurrentMonthBtn from './header/CurrentMonthBtn.vue'
 
 const calendarStore = useCalendarStore()
 
