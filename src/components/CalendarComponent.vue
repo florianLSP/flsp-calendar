@@ -46,12 +46,12 @@ function getFirstDayOfMonth(year: number, month: number) {
       <div
         class="border"
         :class="
-          index === Number(calendarStore.currentDay) - 1 &&
+          day === Number(calendarStore.currentDay) &&
           calendarStore.months[calendarStore.selectedMonth] == calendarStore.currentMonth
             ? 'border-blue-400 border-2'
             : 'border-gray-300'
         "
-        v-for="(day, index) in getDaysInMonth(
+        v-for="day in getDaysInMonth(
           Number(calendarStore.currentYear),
           calendarStore.selectedMonth,
         )"
@@ -59,15 +59,16 @@ function getFirstDayOfMonth(year: number, month: number) {
       >
         <div :style="{ height: `${100 / 7}vh`, width: `${100 / 7}vw` }">
           <p
+            @click="addEventDay()"
             v-if="
-              index === Number(calendarStore.currentDay) - 1 &&
+              day === Number(calendarStore.currentDay) &&
               calendarStore.months[calendarStore.selectedMonth] == calendarStore.currentMonth
             "
             class="p-2 font-extrabold"
           >
-            {{ index + 1 }}
+            {{ day }}
           </p>
-          <p v-else class="p-2">{{ index + 1 }}</p>
+          <p v-else class="p-2">{{ day }}</p>
         </div>
       </div>
     </div>
