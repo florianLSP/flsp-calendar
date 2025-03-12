@@ -45,6 +45,12 @@ function getFirstDayOfMonth(year: number, month: number) {
       ></div>
       <div
         class="border"
+        :class="
+          index === Number(calendarStore.currentDay) - 1 &&
+          calendarStore.months[calendarStore.selectedMonth] == calendarStore.currentMonth
+            ? 'border-blue-400 border-2'
+            : 'border-gray-300'
+        "
         v-for="(day, index) in getDaysInMonth(
           Number(calendarStore.currentYear),
           calendarStore.selectedMonth,
@@ -57,7 +63,7 @@ function getFirstDayOfMonth(year: number, month: number) {
               index === Number(calendarStore.currentDay) - 1 &&
               calendarStore.months[calendarStore.selectedMonth] == calendarStore.currentMonth
             "
-            class="p-2 font-bold"
+            class="p-2 font-extrabold"
           >
             {{ index + 1 }}
           </p>
