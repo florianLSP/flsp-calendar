@@ -3,8 +3,12 @@ import { useCalendarStore } from '@/stores/calendar'
 import MonthNavigation from './header/MonthNavigation.vue'
 import DateDisplay from './header/DateDisplay.vue'
 import CurrentMonthBtn from './header/CurrentMonthBtn.vue'
+import { ref } from 'vue'
+import NewEvent from './NewEvent.vue'
 
 const calendarStore = useCalendarStore()
+const addEvent = ref(false)
+const daySelected = ref()
 
 function getDaysInMonth(year: number, month: number): number {
   return new Date(year, month + 1, 0).getDate()
@@ -13,6 +17,11 @@ function getDaysInMonth(year: number, month: number): number {
 function getFirstDayOfMonth(year: number, month: number) {
   const day = new Date(year, month, 1).getDay()
   return day === 0 ? 6 : day - 1
+}
+
+function addEventDay(day: number) {
+  addEvent.value = true
+  daySelected.value = day
 }
 </script>
 
@@ -57,9 +66,8 @@ function getFirstDayOfMonth(year: number, month: number) {
         )"
         :key="day"
       >
-        <div :style="{ height: `${100 / 7}vh`, width: `${100 / 7}vw` }">
+        <div @click="addEventDay(day)" :style="{ height: `${100 / 7}vh`, width: `${100 / 7}vw` }">
           <p
-            @click="addEventDay()"
             v-if="
               day === Number(calendarStore.currentDay) &&
               calendarStore.months[calendarStore.selectedMonth] == calendarStore.currentMonth
@@ -69,6 +77,7 @@ function getFirstDayOfMonth(year: number, month: number) {
             {{ day }}
           </p>
           <p v-else class="p-2">{{ day }}</p>
+          <div v-if="addEvent && day === daySelected"><NewEvent /></div>
         </div>
       </div>
     </div>
