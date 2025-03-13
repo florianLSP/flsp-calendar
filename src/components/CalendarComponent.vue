@@ -53,7 +53,7 @@ function addEventDay(day: number) {
         class="border border-gray-300 bg-gray-200"
       ></div>
       <div
-        class="border"
+        class="border relative overflow-hidden"
         :class="
           day === Number(calendarStore.currentDay) &&
           calendarStore.months[calendarStore.selectedMonth] == calendarStore.currentMonth
@@ -77,7 +77,9 @@ function addEventDay(day: number) {
             {{ day }}
           </p>
           <p v-else class="p-2">{{ day }}</p>
-          <div v-if="addEvent && day === daySelected"><NewEvent /></div>
+          <div v-if="addEvent && day === daySelected" class="absolute w-full px-1">
+            <NewEvent />
+          </div>
         </div>
       </div>
     </div>
