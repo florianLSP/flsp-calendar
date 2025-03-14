@@ -5,10 +5,12 @@ import DateDisplay from './header/DateDisplay.vue'
 import CurrentMonthBtn from './header/CurrentMonthBtn.vue'
 import { ref } from 'vue'
 import NewEvent from './NewEvent.vue'
+import EventModal from '@/components/EventModal.vue'
 
 const calendarStore = useCalendarStore()
 const addEvent = ref(false)
 const daySelected = ref()
+const openModal = ref(false)
 
 function getDaysInMonth(year: number, month: number): number {
   return new Date(year, month + 1, 0).getDate()
@@ -20,6 +22,7 @@ function getFirstDayOfMonth(year: number, month: number) {
 }
 
 function addEventDay(day: number) {
+  openModal.value = !openModal.value
   addEvent.value = true
   daySelected.value = day
 }
@@ -79,6 +82,7 @@ function addEventDay(day: number) {
           <p v-else class="p-2">{{ day }}</p>
           <div v-if="addEvent && day === daySelected" class="absolute w-full px-1">
             <NewEvent />
+            <EventModal v-if="openModal" />
           </div>
         </div>
       </div>
