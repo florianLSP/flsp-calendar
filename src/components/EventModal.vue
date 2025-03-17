@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
 import { useCalendarStore } from '@/stores/calendar'
+import { XMarkIcon, Bars3BottomLeftIcon } from '@heroicons/vue/24/solid'
 
 const isOpen = ref(true)
 const calendarStore = useCalendarStore()
@@ -38,25 +39,49 @@ function closeModal() {
             leave-to="opacity-0 scale-95"
           >
             <DialogPanel
-              class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+              class="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
             >
+              <XMarkIcon
+                class="absolute top-4 right-4 rounded-md hover:bg-gray-200 cursor-pointer transition h-5 w-5"
+                @click="closeModal"
+              />
               <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
-                Payment successful
+                Nouvel événement
               </DialogTitle>
-              <div class="mt-2">
-                <p class="text-sm text-gray-500">
-                  Your payment has been successfully submitted. We’ve sent you an email with all of
-                  the details of your order.
-                </p>
+              <div class="mt-4 w-full space-y-4">
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Ajouter un titre à l'événement"
+                  maxlength="25"
+                  class="w-full mt-1 p-2 border focus:ring-0 rounded-lg focus:ring-sen-gray focus:border-sen-gray bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white outline-none flex-1"
+                />
+
+                <div class="flex items-center space-x-4">
+                  <Bars3BottomLeftIcon class="h-5 w-5" />
+                  <textarea
+                    name="description"
+                    placeholder="Ajouter une description à l'événement"
+                    class="w-full mt-1 p-2 border focus:ring-0 rounded-lg focus:ring-sen-gray focus:border-sen-gray bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white outline-none flex-1"
+                  ></textarea>
+                </div>
               </div>
 
-              <div class="mt-4">
+              <div class="mt-8 space-x-5 flex justify-end">
+                <button
+                  type="button"
+                  class="inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                  @click="closeModal"
+                >
+                  Annuler
+                </button>
+
                 <button
                   type="button"
                   class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                   @click="closeModal"
                 >
-                  Got it, thanks!
+                  Créer
                 </button>
               </div>
             </DialogPanel>
