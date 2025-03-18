@@ -1,5 +1,18 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import type { Ref } from 'vue'
+
+interface Date {
+  day: number
+  month: number
+  year: number
+}
+
+interface Event {
+  date: Date
+  title: string
+  description: string
+}
 
 export const useCalendarStore = defineStore('calendar', () => {
   const months = ref([
@@ -30,6 +43,7 @@ export const useCalendarStore = defineStore('calendar', () => {
   const selectedYear = ref(Number(currentYear.value))
   const selectedDay = ref()
   const addEvent = ref(false)
+  const events: Ref<Array<Event>> = ref([])
   return {
     months,
     currentDate,
@@ -40,5 +54,6 @@ export const useCalendarStore = defineStore('calendar', () => {
     selectedYear,
     selectedDay,
     addEvent,
+    events,
   }
 })

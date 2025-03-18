@@ -13,6 +13,20 @@ function closeModal() {
   isOpen.value = false
   calendarStore.addEvent = false
 }
+
+function createNewEvent() {
+  isOpen.value = false
+  calendarStore.addEvent = false
+  calendarStore.events.push({
+    date: {
+      day: calendarStore.selectedDay,
+      month: calendarStore.selectedMonth,
+      year: calendarStore.selectedYear,
+    },
+    title: titleEvent.value,
+    description: descriptionEvent.value,
+  })
+}
 </script>
 <template>
   <TransitionRoot appear :show="isOpen" as="template">
@@ -83,7 +97,7 @@ function closeModal() {
                 <button
                   type="button"
                   class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                  @click="closeModal"
+                  @click="createNewEvent"
                 >
                   Créer
                 </button>
