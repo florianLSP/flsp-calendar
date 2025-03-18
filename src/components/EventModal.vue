@@ -6,6 +6,8 @@ import { XMarkIcon, Bars3BottomLeftIcon } from '@heroicons/vue/24/solid'
 
 const isOpen = ref(true)
 const calendarStore = useCalendarStore()
+const titleEvent = ref()
+const descriptionEvent = ref()
 
 function closeModal() {
   isOpen.value = false
@@ -52,6 +54,7 @@ function closeModal() {
                 <input
                   type="text"
                   name="name"
+                  v-model="titleEvent"
                   placeholder="Ajouter un titre à l'événement"
                   maxlength="25"
                   class="w-full mt-1 p-2 border focus:ring-0 rounded-lg focus:ring-sen-gray focus:border-sen-gray bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white outline-none flex-1"
@@ -61,6 +64,7 @@ function closeModal() {
                   <Bars3BottomLeftIcon class="h-5 w-5" />
                   <textarea
                     name="description"
+                    v-model="descriptionEvent"
                     placeholder="Ajouter une description à l'événement"
                     class="w-full mt-1 p-2 border focus:ring-0 rounded-lg focus:ring-sen-gray focus:border-sen-gray bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white outline-none flex-1"
                   ></textarea>
