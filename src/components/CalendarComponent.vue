@@ -82,7 +82,20 @@ function addEventDay(day: number) {
             v-if="calendarStore.addEvent && day === calendarStore.selectedDay"
             class="absolute w-full px-1"
           >
+            <NewEvent eventTitle="Nouvel événement" />
             <EventModal v-if="openModal" />
+          </div>
+
+          <div v-for="event in calendarStore.events" :key="event.title">
+            <div
+              v-if="
+                day == event.date.day &&
+                calendarStore.selectedMonth == event.date.month &&
+                calendarStore.selectedYear == event.date.year
+              "
+            >
+              <NewEvent :eventTitle="event.title" />
+            </div>
           </div>
         </div>
       </div>
