@@ -8,7 +8,6 @@ import NewEvent from './NewEvent.vue'
 import EventModal from '@/components/EventModal.vue'
 
 const calendarStore = useCalendarStore()
-const daySelected = ref()
 const openModal = ref(false)
 
 function getDaysInMonth(year: number, month: number): number {
@@ -23,7 +22,7 @@ function getFirstDayOfMonth(year: number, month: number) {
 function addEventDay(day: number) {
   openModal.value = true
   calendarStore.addEvent = true
-  daySelected.value = day
+  calendarStore.selectedDay = day
 }
 </script>
 
@@ -79,8 +78,10 @@ function addEventDay(day: number) {
             {{ day }}
           </p>
           <p v-else class="p-2">{{ day }}</p>
-          <div v-if="calendarStore.addEvent && day === daySelected" class="absolute w-full px-1">
-            <NewEvent />
+          <div
+            v-if="calendarStore.addEvent && day === calendarStore.selectedDay"
+            class="absolute w-full px-1"
+          >
             <EventModal v-if="openModal" />
           </div>
         </div>
