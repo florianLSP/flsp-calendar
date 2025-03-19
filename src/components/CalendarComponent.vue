@@ -78,10 +78,6 @@ function addEventDay(day: number) {
             {{ day }}
           </p>
           <p v-else class="p-2">{{ day }}</p>
-          <div v-if="calendarStore.addEvent && day === calendarStore.selectedDay" class="px-1">
-            <NewEvent eventTitle="Nouvel événement" />
-            <EventModal v-if="openModal" />
-          </div>
 
           <div v-for="event in calendarStore.events" :key="event.title">
             <div
@@ -94,6 +90,11 @@ function addEventDay(day: number) {
             >
               <NewEvent :eventTitle="event.title" />
             </div>
+          </div>
+
+          <div v-if="calendarStore.addEvent && day === calendarStore.selectedDay" class="px-1 pb-1">
+            <NewEvent eventTitle="Nouvel événement" />
+            <EventModal v-if="openModal" />
           </div>
         </div>
       </div>
