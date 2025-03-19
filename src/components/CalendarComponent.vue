@@ -27,7 +27,7 @@ function addEventDay(day: number) {
 </script>
 
 <template>
-  <div class="p-10 flex flex-col" :style="{ height: '100vh' }">
+  <div class="p-10 flex flex-col h-screen">
     <div class="flex items-center space-x-5">
       <CurrentMonthBtn />
       <MonthNavigation />
@@ -44,7 +44,7 @@ function addEventDay(day: number) {
       <div>Dim.</div>
     </div>
 
-    <div class="grid grid-cols-7 p-5">
+    <div class="grid grid-cols-7 flex-grow p-5">
       <div
         v-for="firstDay in getFirstDayOfMonth(
           calendarStore.selectedYear,
@@ -54,7 +54,7 @@ function addEventDay(day: number) {
         class="border border-gray-300 bg-gray-200"
       ></div>
       <div
-        class="border relative overflow-hidden"
+        class="border relative overflow-hidden h-full"
         :class="
           day === Number(calendarStore.currentDay) &&
           calendarStore.months[calendarStore.selectedMonth] == calendarStore.currentMonth
@@ -67,7 +67,7 @@ function addEventDay(day: number) {
         )"
         :key="day"
       >
-        <div @click="addEventDay(day)" :style="{ height: `${100 / 7}vh`, width: `${100 / 7}vw` }">
+        <div @click="addEventDay(day)" class="flex flex-col h-full w-full">
           <p
             v-if="
               day === Number(calendarStore.currentDay) &&
@@ -93,6 +93,7 @@ function addEventDay(day: number) {
                 calendarStore.selectedMonth == event.date.month &&
                 calendarStore.selectedYear == event.date.year
               "
+              class="px-1 pb-1"
             >
               <NewEvent :eventTitle="event.title" />
             </div>
