@@ -68,7 +68,7 @@ function addEventDay(day: number) {
         )"
         :key="day"
       >
-        <div class="flex flex-col w-full">
+        <div class="flex flex-col w-full h-32">
           <p
             v-if="
               day === Number(calendarStore.currentDay) &&
