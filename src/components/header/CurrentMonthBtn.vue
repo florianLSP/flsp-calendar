@@ -11,7 +11,7 @@ function goToCurrentMonth() {
 <template>
   <button
     @click="goToCurrentMonth"
-    class="bg-white hover:bg-gray-100 text-gray-800 py-2 px-4 border border-gray-400 rounded-xl shadow"
+    class="bg-white hover:bg-flsp-light_gray text-gray-800 py-2 px-4 border border-flsp-dark_gray rounded-xl shadow"
   >
     Aujourd'hui
   </button>

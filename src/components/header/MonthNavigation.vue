@@ -20,11 +20,11 @@ function updateMonth(step: number) {
   <div class="flex space-x-1">
     <ChevronLeftIcon
       @click="updateMonth(-1)"
-      class="h-5 w-5 rounded-md hover:bg-gray-200 cursor-pointer transition items-center"
+      class="h-5 w-5 rounded-md hover:bg-flsp-light_gray cursor-pointer transition items-center"
     />
     <ChevronRightIcon
       @click="updateMonth(1)"
-      class="h-5 w-5 rounded-md hover:bg-gray-200 cursor-pointer transition"
+      class="h-5 w-5 rounded-md hover:bg-flsp-light_gray cursor-pointer transition"
     />
   </div>
 </template>

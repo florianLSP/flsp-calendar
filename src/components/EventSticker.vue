@@ -5,7 +5,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="bg-blue-500 w-full rounded-md">
+  <div class="w-full rounded-md cursor-pointer bg-blue-500 h-6 flex items-center">
     <p class="pl-2 text-white text-sm overflow-hidden text-ellipsis whitespace-nowrap">
       {{ props.eventTitle }}
     </p>

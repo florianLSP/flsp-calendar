@@ -51,7 +51,7 @@ function addEventDay(day: number) {
           calendarStore.selectedMonth,
         )"
         :key="firstDay"
-        class="border border-gray-300 bg-gray-200"
+        class="border border-flsp-medium_gray bg-flsp-light_gray"
       ></div>
       <div
         @click="addEventDay(day)"
@@ -59,8 +59,8 @@ function addEventDay(day: number) {
         :class="
           day === Number(calendarStore.currentDay) &&
           calendarStore.months[calendarStore.selectedMonth] == calendarStore.currentMonth
-            ? 'border-blue-400 border-2'
-            : 'border-gray-300'
+            ? 'border-flsp-medium_blue border-4'
+            : 'border-flsp-medium_gray'
         "
         v-for="day in getDaysInMonth(
           Number(calendarStore.currentYear),
