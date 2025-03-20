@@ -33,7 +33,12 @@ function createNewEvent() {
 </script>
 <template>
   <TransitionRoot appear :show="isOpen" as="template">
-    <Dialog as="div" @close="closeModal" @keydown.enter="createNewEvent" class="relative z-10">
+    <Dialog
+      as="div"
+      @close="closeModal"
+      @keydown.enter.prevent="createNewEvent"
+      class="relative z-10"
+    >
       <TransitionChild
         as="template"
         enter="duration-300 ease-out"
