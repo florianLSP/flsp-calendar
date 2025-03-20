@@ -4,7 +4,7 @@ import MonthNavigation from './header/MonthNavigation.vue'
 import DateDisplay from './header/DateDisplay.vue'
 import CurrentMonthBtn from './header/CurrentMonthBtn.vue'
 import { ref } from 'vue'
-import NewEvent from './EventSticker.vue'
+import EventSticker from './EventSticker.vue'
 import EventModal from '@/components/EventModal.vue'
 
 const calendarStore = useCalendarStore()
@@ -89,12 +89,12 @@ function addEventDay(day: number) {
               "
               class="px-1 pb-1"
             >
-              <NewEvent :eventTitle="event.title" />
+              <EventSticker :eventTitle="event.title" />
             </div>
           </div>
 
           <div v-if="calendarStore.addEvent && day === calendarStore.selectedDay" class="px-1 pb-1">
-            <NewEvent eventTitle="Nouvel événement" />
+            <EventSticker eventTitle="Nouvel événement" />
             <EventModal v-if="openModal" />
           </div>
         </div>
