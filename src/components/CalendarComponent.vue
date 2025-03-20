@@ -4,7 +4,7 @@ import MonthNavigation from './header/MonthNavigation.vue'
 import DateDisplay from './header/DateDisplay.vue'
 import CurrentMonthBtn from './header/CurrentMonthBtn.vue'
 import { ref } from 'vue'
-import NewEvent from './NewEvent.vue'
+import NewEvent from './EventSticker.vue'
 import EventModal from '@/components/EventModal.vue'
 
 const calendarStore = useCalendarStore()
