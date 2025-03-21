@@ -6,9 +6,11 @@ import CurrentMonthBtn from './header/CurrentMonthBtn.vue'
 import { ref } from 'vue'
 import EventSticker from './EventSticker.vue'
 import EventModal from '@/components/EventModal.vue'
+import EventDetailsModal from './header/EventDetailsModal.vue'
 
 const calendarStore = useCalendarStore()
 const openModal = ref(false)
+const openDetailsModal = ref(false)
 
 function getDaysInMonth(year: number, month: number): number {
   return new Date(year, month + 1, 0).getDate()
@@ -23,6 +25,11 @@ function addEventDay(day: number) {
   openModal.value = true
   calendarStore.addEvent = true
   calendarStore.selectedDay = day
+}
+
+function eventDetailsModal(event: Event) {
+  event.stopPropagation()
+  openDetailsModal.value = true
 }
 </script>
 
@@ -89,7 +96,15 @@ function addEventDay(day: number) {
               "
               class="px-1 pb-1"
             >
-              <EventSticker :eventTitle="event.title" />
+              <EventSticker @click="eventDetailsModal" :eventTitle="event.title" />
+              <EventDetailsModal
+                v-if="openDetailsModal"
+                :eventTitle="event.title"
+                :eventDescription="event.description"
+                :eventDay="event.date.day"
+                :eventMonth="event.date.month"
+                :eventYear="event.date.year"
+              />
             </div>
           </div>
 
