@@ -2,11 +2,14 @@
 import { ref } from 'vue'
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
 import { XMarkIcon } from '@heroicons/vue/24/solid'
+import { useCalendarStore } from '@/stores/calendar'
 
 const isOpen = ref(true)
+const calendarStore = useCalendarStore()
 
 function closeModal() {
   isOpen.value = false
+  calendarStore.openEventDetailsModal = false
 }
 
 const props = defineProps({

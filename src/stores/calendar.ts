@@ -44,6 +44,7 @@ export const useCalendarStore = defineStore('calendar', () => {
   const selectedDay = ref()
   const addEvent = ref(false)
   const events: Ref<Array<Event>> = ref([])
+  const openEventDetailsModal = ref(false)
   return {
     months,
     currentDate,
@@ -55,5 +56,6 @@ export const useCalendarStore = defineStore('calendar', () => {
     selectedDay,
     addEvent,
     events,
+    openEventDetailsModal,
   }
 })

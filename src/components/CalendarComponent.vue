@@ -10,7 +10,6 @@ import EventDetailsModal from './header/EventDetailsModal.vue'
 
 const calendarStore = useCalendarStore()
 const openModal = ref(false)
-const openDetailsModal = ref(false)
 
 function getDaysInMonth(year: number, month: number): number {
   return new Date(year, month + 1, 0).getDate()
@@ -29,7 +28,7 @@ function addEventDay(day: number) {
 
 function eventDetailsModal(event: Event) {
   event.stopPropagation()
-  openDetailsModal.value = true
+  calendarStore.openEventDetailsModal = true
 }
 </script>
 
@@ -98,7 +97,7 @@ function eventDetailsModal(event: Event) {
             >
               <EventSticker @click="eventDetailsModal" :eventTitle="event.title" />
               <EventDetailsModal
-                v-if="openDetailsModal"
+                v-if="calendarStore.openEventDetailsModal"
                 :eventTitle="event.title"
                 :eventDescription="event.description"
                 :eventDay="event.date.day"
