@@ -4,19 +4,16 @@ import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } fro
 import { useCalendarStore } from '@/stores/calendar'
 import { XMarkIcon, Bars3BottomLeftIcon } from '@heroicons/vue/24/solid'
 
-const isOpen = ref(true)
 const calendarStore = useCalendarStore()
 const titleEvent = ref()
 const descriptionEvent = ref()
 
 function closeModal() {
-  isOpen.value = false
-  calendarStore.addEvent = false
+  calendarStore.openEventCreationModal = false
 }
 
 function createNewEvent() {
-  isOpen.value = false
-  calendarStore.addEvent = false
+  calendarStore.openEventCreationModal = false
   calendarStore.events.push({
     date: {
       day: calendarStore.selectedDay,
@@ -32,7 +29,7 @@ function createNewEvent() {
 }
 </script>
 <template>
-  <TransitionRoot appear :show="isOpen" as="template">
+  <TransitionRoot appear :show="calendarStore.openEventCreationModal" as="template">
     <Dialog
       as="div"
       @close="closeModal"

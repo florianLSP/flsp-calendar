@@ -3,13 +3,11 @@ import { useCalendarStore } from '@/stores/calendar'
 import MonthNavigation from './header/MonthNavigation.vue'
 import DateDisplay from './header/DateDisplay.vue'
 import CurrentMonthBtn from './header/CurrentMonthBtn.vue'
-import { ref } from 'vue'
 import EventSticker from './EventSticker.vue'
 import EventCreationModal from '@/components/modals/EventCreationModal.vue'
 import EventDetailsModal from './modals/EventDetailsModal.vue'
 
 const calendarStore = useCalendarStore()
-const openModal = ref(false)
 
 function getDaysInMonth(year: number, month: number): number {
   return new Date(year, month + 1, 0).getDate()
@@ -21,8 +19,7 @@ function getFirstDayOfMonth(year: number, month: number) {
 }
 
 function addEventDay(day: number) {
-  openModal.value = true
-  calendarStore.addEvent = true
+  calendarStore.openEventCreationModal = true
   calendarStore.selectedDay = day
 }
 
@@ -107,9 +104,12 @@ function eventDetailsModal(event: Event) {
             </div>
           </div>
 
-          <div v-if="calendarStore.addEvent && day === calendarStore.selectedDay" class="px-1 pb-1">
+          <div
+            v-if="calendarStore.openEventCreationModal && day === calendarStore.selectedDay"
+            class="px-1 pb-1"
+          >
             <EventSticker eventTitle="Nouvel événement" />
-            <EventCreationModal v-if="openModal" />
+            <EventCreationModal />
           </div>
         </div>
       </div>
