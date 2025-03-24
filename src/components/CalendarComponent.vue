@@ -5,8 +5,8 @@ import DateDisplay from './header/DateDisplay.vue'
 import CurrentMonthBtn from './header/CurrentMonthBtn.vue'
 import { ref } from 'vue'
 import EventSticker from './EventSticker.vue'
-import EventModal from '@/components/EventModal.vue'
-import EventDetailsModal from './header/EventDetailsModal.vue'
+import EventModal from '@/components/modals/EventModal.vue'
+import EventDetailsModal from './modals/EventDetailsModal.vue'
 
 const calendarStore = useCalendarStore()
 const openModal = ref(false)
