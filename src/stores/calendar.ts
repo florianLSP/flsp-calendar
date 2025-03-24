@@ -45,10 +45,20 @@ export const useCalendarStore = defineStore('calendar', () => {
   const events: Ref<Array<Event>> = ref([])
   const openEventDetailsModal = ref(false)
   const openEventCreationModal = ref(false)
+  const selectedEvent: Ref<Event | undefined> = ref()
+  const isEventClicked = ref(false)
 
   function addEventDay(day: number) {
-    openEventCreationModal.value = true
-    selectedDay.value = day
+    if (!isEventClicked.value) {
+      openEventCreationModal.value = true
+      selectedDay.value = day
+    }
+  }
+
+  function eventDetailsModal(event: Event) {
+    isEventClicked.value = true
+    openEventDetailsModal.value = true
+    selectedEvent.value = event
   }
   return {
     months,
@@ -62,6 +72,9 @@ export const useCalendarStore = defineStore('calendar', () => {
     events,
     openEventDetailsModal,
     openEventCreationModal,
+    isEventClicked,
+    selectedEvent,
     addEventDay,
+    eventDetailsModal,
   }
 })

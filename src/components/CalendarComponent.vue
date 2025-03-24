@@ -17,11 +17,6 @@ function getFirstDayOfMonth(year: number, month: number) {
   const day = new Date(year, month, 1).getDay()
   return day === 0 ? 6 : day - 1
 }
-
-function eventDetailsModal(event: Event) {
-  event.stopPropagation()
-  calendarStore.openEventDetailsModal = true
-}
 </script>
 
 <template>
@@ -87,14 +82,9 @@ function eventDetailsModal(event: Event) {
               "
               class="px-1 pb-1"
             >
-              <EventSticker @click="eventDetailsModal" :eventTitle="event.title" />
-              <EventDetailsModal
-                v-if="calendarStore.openEventDetailsModal"
+              <EventSticker
+                @click="calendarStore.eventDetailsModal(event)"
                 :eventTitle="event.title"
-                :eventDescription="event.description"
-                :eventDay="event.date.day"
-                :eventMonth="event.date.month"
-                :eventYear="event.date.year"
               />
             </div>
           </div>
@@ -109,5 +99,6 @@ function eventDetailsModal(event: Event) {
         </div>
       </div>
     </div>
+    <EventDetailsModal v-if="calendarStore.openEventDetailsModal" />
   </div>
 </template>

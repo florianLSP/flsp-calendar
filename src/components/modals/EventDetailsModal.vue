@@ -1,27 +1,18 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
 import { XMarkIcon } from '@heroicons/vue/24/solid'
 import { useCalendarStore } from '@/stores/calendar'
 
-const isOpen = ref(true)
 const calendarStore = useCalendarStore()
 
 function closeModal() {
-  isOpen.value = false
+  calendarStore.isEventClicked = false
   calendarStore.openEventDetailsModal = false
+  calendarStore.selectedEvent = undefined
 }
-
-const props = defineProps({
-  eventTitle: String,
-  eventDescription: String,
-  eventDay: Number,
-  eventMonth: Number,
-  eventYear: Number,
-})
 </script>
 <template>
-  <TransitionRoot appear :show="isOpen" as="template">
+  <TransitionRoot appear :show="calendarStore.openEventDetailsModal" as="template">
     <Dialog as="div" @close="closeModal" class="relative z-10">
       <TransitionChild
         as="template"
@@ -35,7 +26,7 @@ const props = defineProps({
         <div class="fixed inset-0 bg-black/25 backdrop-blur-sm"></div>
       </TransitionChild>
 
-      <div class="fixed inset-0 overflow-y-auto">
+      <div v-if="calendarStore.selectedEvent" class="fixed inset-0 overflow-y-auto">
         <div class="flex min-h-full items-center justify-center p-4 text-center">
           <TransitionChild
             as="template"
@@ -54,11 +45,15 @@ const props = defineProps({
                 @click="closeModal"
               />
               <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
-                {{ props.eventTitle }}
+                {{ calendarStore.selectedEvent.title }}
               </DialogTitle>
               <div class="mt-4 w-full space-y-4">
-                <p>description: {{ props.eventDescription }}</p>
-                <p>date: {{ props.eventDay }}/{{ props.eventMonth }}/{{ props.eventYear }}</p>
+                <p>description: {{ calendarStore.selectedEvent.description }}</p>
+                <p>
+                  date: {{ calendarStore.selectedEvent.date.day }}/{{
+                    calendarStore.selectedEvent.date.month
+                  }}/{{ calendarStore.selectedEvent.date.year }}
+                </p>
               </div>
 
               <div class="mt-8 space-x-5 flex justify-end">
