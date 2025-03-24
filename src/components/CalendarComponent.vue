@@ -18,11 +18,6 @@ function getFirstDayOfMonth(year: number, month: number) {
   return day === 0 ? 6 : day - 1
 }
 
-function addEventDay(day: number) {
-  calendarStore.openEventCreationModal = true
-  calendarStore.selectedDay = day
-}
-
 function eventDetailsModal(event: Event) {
   event.stopPropagation()
   calendarStore.openEventDetailsModal = true
@@ -57,7 +52,7 @@ function eventDetailsModal(event: Event) {
         class="border border-flsp-medium_gray bg-flsp-light_gray"
       ></div>
       <div
-        @click="addEventDay(day)"
+        @click="calendarStore.addEventDay(day)"
         class="border relative overflow-hidden h-full"
         :class="
           day === Number(calendarStore.currentDay) &&
