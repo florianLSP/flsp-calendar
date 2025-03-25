@@ -56,9 +56,13 @@ function closeModal() {
 
               <div class="mt-4 w-full space-y-1">
                 <p>
-                  {{ calendarStore.selectedEvent.date.day }}/{{
-                    calendarStore.selectedEvent.date.month
-                  }}/{{ calendarStore.selectedEvent.date.year }}
+                  <span v-if="calendarStore.selectedEvent.date.day < 10">0</span
+                  >{{ calendarStore.selectedEvent.date.day }}/<span
+                    v-if="calendarStore.selectedEvent.date.month < 10"
+                    >0</span
+                  >{{ calendarStore.selectedEvent.date.month }}/{{
+                    calendarStore.selectedEvent.date.year
+                  }}
                 </p>
                 <p class="capitalize">{{ calendarStore.selectedEvent.description }}</p>
               </div>
