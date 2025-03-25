@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
-import { XMarkIcon } from '@heroicons/vue/24/solid'
+import { XMarkIcon, PencilSquareIcon } from '@heroicons/vue/24/solid'
 import { useCalendarStore } from '@/stores/calendar'
 
 const calendarStore = useCalendarStore()
@@ -44,32 +44,39 @@ function closeModal() {
                 class="absolute top-4 right-4 rounded-md hover:bg-gray-200 cursor-pointer transition h-5 w-5"
                 @click="closeModal"
               />
-              <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
+              <DialogTitle
+                as="h3"
+                class="text-xl font-medium leading-6 text-gray-900 capitalize flex items-center"
+              >
                 {{ calendarStore.selectedEvent.title }}
+                <span class="ml-2 p-1 rounded-md hover:bg-flsp-light_gray cursor-pointer transition"
+                  ><PencilSquareIcon class="h-5 w-5"
+                /></span>
               </DialogTitle>
-              <div class="mt-4 w-full space-y-4">
-                <p>description: {{ calendarStore.selectedEvent.description }}</p>
+
+              <div class="mt-4 w-full space-y-1">
                 <p>
-                  date: {{ calendarStore.selectedEvent.date.day }}/{{
+                  {{ calendarStore.selectedEvent.date.day }}/{{
                     calendarStore.selectedEvent.date.month
                   }}/{{ calendarStore.selectedEvent.date.year }}
                 </p>
+                <p class="capitalize">{{ calendarStore.selectedEvent.description }}</p>
               </div>
 
               <div class="mt-8 space-x-5 flex justify-end">
                 <button
                   type="button"
                   class="inline-flex justify-center rounded-md border border-transparent bg-flsp-light_red px-4 py-2 text-sm font-medium text-flsp-dark_red hover:bg-flsp-medium_red focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
-                  @click="closeModal"
                 >
-                  Annuler
+                  Supprimer
                 </button>
 
                 <button
                   type="button"
                   class="inline-flex justify-center rounded-md border border-transparent bg-flsp-light_blue px-4 py-2 text-sm font-medium text-flsp-dark_blue hover:bg-flsp-medium_blue focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                  @click="closeModal"
                 >
-                  Créer
+                  Fermer
                 </button>
               </div>
             </DialogPanel>
