@@ -64,7 +64,7 @@ function closeModal() {
                     calendarStore.selectedEvent.date.year
                   }}
                 </p>
-                <p class="capitalize">{{ calendarStore.selectedEvent.description }}</p>
+                <p>{{ calendarStore.selectedEvent.description }}</p>
               </div>
 
               <div class="mt-8 space-x-5 flex justify-end">
