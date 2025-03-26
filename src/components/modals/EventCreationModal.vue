@@ -3,16 +3,25 @@ import { ref } from 'vue'
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
 import { useCalendarStore } from '@/stores/calendar'
 import { XMarkIcon, Bars3BottomLeftIcon } from '@heroicons/vue/24/solid'
+import AlertInfo from '../AlertInfo.vue'
 
 const calendarStore = useCalendarStore()
-const titleEvent = ref()
+const titleEvent = ref('')
 const descriptionEvent = ref()
+const showAlertInfo = ref(false)
 
 function closeModal() {
   calendarStore.openEventCreationModal = false
 }
 
 function createNewEvent() {
+  if (titleEvent.value == '') {
+    showAlertInfo.value = true
+    setTimeout(() => {
+      showAlertInfo.value = false
+    }, 5000)
+    return
+  }
   calendarStore.openEventCreationModal = false
   calendarStore.events.push({
     date: {
@@ -48,7 +57,19 @@ function createNewEvent() {
         <div class="fixed inset-0 bg-black/25 backdrop-blur-sm"></div>
       </TransitionChild>
 
-      <div class="fixed inset-0 overflow-y-auto">
+      <div class="fixed inset-0">
+        <div class="h-12">
+          <Transition
+            enter-active-class="transition-opacity duration-500 ease-out"
+            enter-from-class="opacity-0"
+            enter-to-class="opacity-100"
+            leave-active-class="transition-opacity duration-500 ease-in"
+            leave-from-class="opacity-100"
+            leave-to-class="opacity-0"
+          >
+            <AlertInfo v-if="showAlertInfo" />
+          </Transition>
+        </div>
         <div class="flex min-h-full items-center justify-center p-4 text-center">
           <TransitionChild
             as="template"
@@ -76,7 +97,8 @@ function createNewEvent() {
                   v-model="titleEvent"
                   placeholder="Ajouter un titre à l'événement"
                   maxlength="25"
-                  class="w-full mt-1 p-2 border focus:ring-0 rounded-lg focus:ring-sen-gray focus:border-sen-gray bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white outline-none flex-1"
+                  class="w-full mt-1 p-2 border focus:ring-0 rounded-lg focus:ring-flsp-light_gray focus:border-flsp-light_gray bg-gray-50 outline-none flex-1"
+                  :class="showAlertInfo ? 'border-flsp-medium_red duration-200 border-2' : 'border'"
                 />
 
                 <div class="flex items-center space-x-4">
