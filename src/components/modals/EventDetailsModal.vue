@@ -10,6 +10,13 @@ function closeModal() {
   calendarStore.openEventDetailsModal = false
   calendarStore.selectedEvent = undefined
 }
+
+function deleteEvent() {
+  calendarStore.events = calendarStore.events.filter(
+    (event) => event !== calendarStore.selectedEvent,
+  )
+  closeModal()
+}
 </script>
 <template>
   <TransitionRoot appear :show="calendarStore.openEventDetailsModal" as="template">
@@ -71,6 +78,7 @@ function closeModal() {
                 <button
                   type="button"
                   class="inline-flex justify-center rounded-md border border-transparent bg-flsp-light_red px-4 py-2 text-sm font-medium text-flsp-dark_red hover:bg-flsp-medium_red focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                  @click="deleteEvent()"
                 >
                   Supprimer
                 </button>
