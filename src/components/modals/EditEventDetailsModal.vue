@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
-import { XMarkIcon, PencilSquareIcon } from '@heroicons/vue/24/solid'
+import { XMarkIcon } from '@heroicons/vue/24/solid'
 import { useCalendarStore } from '@/stores/calendar'
 
 const calendarStore = useCalendarStore()
@@ -56,9 +56,6 @@ function deleteEvent() {
                 class="text-xl font-medium leading-6 text-gray-900 capitalize flex items-center"
               >
                 zefzefzefzef{{ calendarStore.selectedEvent.title }}
-                <span class="ml-2 p-1 rounded-md hover:bg-flsp-light_gray cursor-pointer transition"
-                  ><PencilSquareIcon class="h-5 w-5"
-                /></span>
               </DialogTitle>
 
               <div class="mt-4 w-full space-y-1">
