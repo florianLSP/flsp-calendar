@@ -57,6 +57,9 @@ export const useCalendarStore = defineStore('calendar', () => {
   }
 
   function eventDetailsModal(event: Event) {
+    if (openEditEventDetailsModal.value) {
+      openEditEventDetailsModal.value = false
+    }
     isEventClicked.value = true
     openEventDetailsModal.value = true
     selectedEvent.value = event

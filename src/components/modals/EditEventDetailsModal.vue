@@ -83,9 +83,9 @@ function deleteEvent() {
                 <button
                   type="button"
                   class="inline-flex justify-center rounded-md border border-transparent bg-flsp-light_blue px-4 py-2 text-sm font-medium text-flsp-dark_blue hover:bg-flsp-medium_blue focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                  @click="closeModal"
+                  @click="calendarStore.eventDetailsModal(calendarStore.selectedEvent)"
                 >
-                  Fermer
+                  Modifier
                 </button>
               </div>
             </DialogPanel>
