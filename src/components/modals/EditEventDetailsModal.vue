@@ -19,7 +19,7 @@ function deleteEvent() {
 }
 </script>
 <template>
-  <TransitionRoot appear :show="calendarStore.openEventDetailsModal" as="template">
+  <TransitionRoot appear :show="calendarStore.openEditEventDetailsModal" as="template">
     <Dialog as="div" @close="closeModal" class="relative z-10">
       <TransitionChild
         as="template"
@@ -55,7 +55,7 @@ function deleteEvent() {
                 as="h3"
                 class="text-xl font-medium leading-6 text-gray-900 capitalize flex items-center"
               >
-                {{ calendarStore.selectedEvent.title }}
+                zefzefzefzef{{ calendarStore.selectedEvent.title }}
                 <span class="ml-2 p-1 rounded-md hover:bg-flsp-light_gray cursor-pointer transition"
                   ><PencilSquareIcon class="h-5 w-5"
                 /></span>

@@ -56,7 +56,9 @@ function deleteEvent() {
                 class="text-xl font-medium leading-6 text-gray-900 capitalize flex items-center"
               >
                 {{ calendarStore.selectedEvent.title }}
-                <span class="ml-2 p-1 rounded-md hover:bg-flsp-light_gray cursor-pointer transition"
+                <span
+                  @click="calendarStore.editEventDetailsModal"
+                  class="ml-2 p-1 rounded-md hover:bg-flsp-light_gray cursor-pointer transition"
                   ><PencilSquareIcon class="h-5 w-5"
                 /></span>
               </DialogTitle>

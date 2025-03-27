@@ -6,6 +6,7 @@ import CurrentMonthBtn from './header/CurrentMonthBtn.vue'
 import EventSticker from './EventSticker.vue'
 import EventCreationModal from '@/components/modals/EventCreationModal.vue'
 import EventDetailsModal from './modals/EventDetailsModal.vue'
+import EditEventDetailsModal from './modals/EditEventDetailsModal.vue'
 
 const calendarStore = useCalendarStore()
 
@@ -100,5 +101,6 @@ function getFirstDayOfMonth(year: number, month: number) {
       </div>
     </div>
     <EventDetailsModal v-if="calendarStore.openEventDetailsModal" />
+    <EditEventDetailsModal v-if="calendarStore.openEditEventDetailsModal" />
   </div>
 </template>
