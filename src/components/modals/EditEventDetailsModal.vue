@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
-import { XMarkIcon } from '@heroicons/vue/24/solid'
+import { XMarkIcon, Bars3BottomLeftIcon } from '@heroicons/vue/24/solid'
 import { useCalendarStore } from '@/stores/calendar'
 
 const calendarStore = useCalendarStore()
@@ -73,7 +73,16 @@ function deleteEvent() {
                     calendarStore.selectedEvent.date.year
                   }}
                 </p>
-                <p>{{ calendarStore.selectedEvent.description }}</p>
+
+                <div class="flex items-center space-x-4">
+                  <Bars3BottomLeftIcon class="h-5 w-5" />
+                  <textarea
+                    name="description"
+                    v-model="calendarStore.selectedEvent.description"
+                    placeholder="Ajouter une description à l'événement"
+                    class="w-full mt-1 p-2 border focus:ring-0 rounded-lg focus:ring-sen-gray focus:border-sen-gray bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white outline-none flex-1"
+                  ></textarea>
+                </div>
               </div>
 
               <div class="mt-8 space-x-5 flex justify-end">
