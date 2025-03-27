@@ -7,7 +7,7 @@ const calendarStore = useCalendarStore()
 
 function closeModal() {
   calendarStore.isEventClicked = false
-  calendarStore.openEventDetailsModal = false
+  calendarStore.openEditEventDetailsModal = false
   calendarStore.selectedEvent = undefined
 }
 
