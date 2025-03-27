@@ -51,11 +51,16 @@ function deleteEvent() {
                 class="absolute top-4 right-4 rounded-md hover:bg-gray-200 cursor-pointer transition h-5 w-5"
                 @click="closeModal"
               />
-              <DialogTitle
-                as="h3"
-                class="text-xl font-medium leading-6 text-gray-900 capitalize flex items-center"
-              >
-                zefzefzefzef{{ calendarStore.selectedEvent.title }}
+              <DialogTitle class="leading-6 text-gray-900 capitalize flex items-center w-3/4">
+                <!--:class="showAlertInfo ? 'border-flsp-medium_red duration-200 border-2' : 'border'"-->
+                <input
+                  type="text"
+                  name="name"
+                  v-model="calendarStore.selectedEvent.title"
+                  placeholder="Ajouter un titre à l'événement"
+                  maxlength="25"
+                  class="w-full mt-1 p-2 border focus:ring-0 rounded-lg focus:ring-flsp-light_gray focus:border-flsp-light_gray bg-gray-50 outline-none flex-1"
+                />
               </DialogTitle>
 
               <div class="mt-4 w-full space-y-1">
