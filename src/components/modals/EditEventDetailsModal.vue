@@ -2,7 +2,8 @@
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
 import { XMarkIcon, Bars3BottomLeftIcon } from '@heroicons/vue/24/solid'
 import { useCalendarStore } from '@/stores/calendar'
-import { onMounted, ref, type Ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
+import type { Ref } from 'vue'
 
 const calendarStore = useCalendarStore()
 const date: Ref<Date | null> = ref(null)
@@ -30,6 +31,16 @@ onMounted(() => {
     date.value = new Date(year, month - 1, day)
   } else {
     date.value = new Date()
+  }
+})
+
+watch(date, (newDate) => {
+  if (newDate && calendarStore.selectedEvent) {
+    calendarStore.selectedEvent.date = {
+      day: newDate.getDate(),
+      month: newDate.getMonth() + 1,
+      year: newDate.getFullYear(),
+    }
   }
 })
 </script>
