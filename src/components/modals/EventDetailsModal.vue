@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
-import { XMarkIcon, PencilSquareIcon } from '@heroicons/vue/24/solid'
+import { XMarkIcon, PencilSquareIcon, Bars3BottomLeftIcon } from '@heroicons/vue/24/solid'
 import { useCalendarStore } from '@/stores/calendar'
 
 const calendarStore = useCalendarStore()
@@ -63,7 +63,7 @@ function deleteEvent() {
                 /></span>
               </DialogTitle>
 
-              <div class="mt-4 w-full space-y-1">
+              <div class="mt-4 w-full space-y-4">
                 <p>
                   <span v-if="calendarStore.selectedEvent.date.day < 10">0</span
                   >{{ calendarStore.selectedEvent.date.day }}/<span
@@ -73,7 +73,10 @@ function deleteEvent() {
                     calendarStore.selectedEvent.date.year
                   }}
                 </p>
-                <p>{{ calendarStore.selectedEvent.description }}</p>
+                <div class="flex items-center space-x-4">
+                  <Bars3BottomLeftIcon class="h-5 w-5" />
+                  <p>{{ calendarStore.selectedEvent.description }}</p>
+                </div>
               </div>
 
               <div class="mt-8 space-x-5 flex justify-end">
