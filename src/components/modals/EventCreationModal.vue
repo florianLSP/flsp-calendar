@@ -67,7 +67,7 @@ function createNewEvent() {
             leave-from-class="opacity-100"
             leave-to-class="opacity-0"
           >
-            <AlertInfo v-if="showAlertInfo" />
+            <AlertInfo v-if="showAlertInfo" alertMessage="L'événement doit avoir un titre !" />
           </Transition>
         </div>
         <div class="flex min-h-full items-center justify-center p-4 text-center">
