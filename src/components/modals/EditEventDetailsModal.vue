@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
-import { XMarkIcon, PencilSquareIcon, Bars3BottomLeftIcon } from '@heroicons/vue/24/solid'
+import { XMarkIcon, Bars3BottomLeftIcon } from '@heroicons/vue/24/solid'
 import { useCalendarStore } from '@/stores/calendar'
+import { onMounted, ref, watch } from 'vue'
+import type { Ref } from 'vue'
 
 const calendarStore = useCalendarStore()
+const date: Ref<Date | null> = ref(null)
 
 function closeModal() {
   calendarStore.isEventClicked = false
-  calendarStore.openEventDetailsModal = false
+  calendarStore.openEditEventDetailsModal = false
   calendarStore.selectedEvent = undefined
 }
 
@@ -17,9 +20,32 @@ function deleteEvent() {
   )
   closeModal()
 }
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('fr-FR')
+}
+
+onMounted(() => {
+  if (calendarStore.selectedEvent?.date) {
+    const { day, month, year } = calendarStore.selectedEvent.date
+    date.value = new Date(year, month - 1, day)
+  } else {
+    date.value = new Date()
+  }
+})
+
+watch(date, (newDate) => {
+  if (newDate && calendarStore.selectedEvent) {
+    calendarStore.selectedEvent.date = {
+      day: newDate.getDate(),
+      month: newDate.getMonth() + 1,
+      year: newDate.getFullYear(),
+    }
+  }
+})
 </script>
 <template>
-  <TransitionRoot appear :show="calendarStore.openEventDetailsModal" as="template">
+  <TransitionRoot appear :show="calendarStore.openEditEventDetailsModal" as="template">
     <Dialog as="div" @close="closeModal" class="relative z-10">
       <TransitionChild
         as="template"
@@ -51,31 +77,34 @@ function deleteEvent() {
                 class="absolute top-4 right-4 rounded-md hover:bg-gray-200 cursor-pointer transition h-5 w-5"
                 @click="closeModal"
               />
-              <DialogTitle
-                as="h3"
-                class="text-xl font-medium leading-6 text-gray-900 capitalize flex items-center"
-              >
-                {{ calendarStore.selectedEvent.title }}
-                <span
-                  @click="calendarStore.editEventDetailsModal"
-                  class="ml-2 p-1 rounded-md hover:bg-flsp-light_gray cursor-pointer transition"
-                  ><PencilSquareIcon class="h-5 w-5"
-                /></span>
+              <DialogTitle class="leading-6 text-gray-900 capitalize flex items-center w-3/4">
+                <!--:class="showAlertInfo ? 'border-flsp-medium_red duration-200 border-2' : 'border'"-->
+                <input
+                  type="text"
+                  name="name"
+                  v-model="calendarStore.selectedEvent.title"
+                  placeholder="Ajouter un titre à l'événement"
+                  maxlength="25"
+                  class="w-full mt-1 p-2 border focus:ring-0 rounded-lg focus:ring-flsp-light_gray focus:border-flsp-light_gray bg-gray-50 outline-none flex-1"
+                />
               </DialogTitle>
 
-              <div class="mt-4 w-full space-y-4">
-                <p>
-                  <span v-if="calendarStore.selectedEvent.date.day < 10">0</span
-                  >{{ calendarStore.selectedEvent.date.day }}/<span
-                    v-if="calendarStore.selectedEvent.date.month < 10"
-                    >0</span
-                  >{{ calendarStore.selectedEvent.date.month }}/{{
-                    calendarStore.selectedEvent.date.year
-                  }}
-                </p>
+              <div class="mt-4 w-full space-y-1">
+                <VueDatePicker
+                  v-model="date"
+                  teleport="body"
+                  :enable-time-picker="false"
+                  :format="formatDate"
+                ></VueDatePicker>
+
                 <div class="flex items-center space-x-4">
                   <Bars3BottomLeftIcon class="h-5 w-5" />
-                  <p>{{ calendarStore.selectedEvent.description }}</p>
+                  <textarea
+                    name="description"
+                    v-model="calendarStore.selectedEvent.description"
+                    placeholder="Ajouter une description à l'événement"
+                    class="w-full mt-1 p-2 border focus:ring-0 rounded-lg focus:ring-sen-gray focus:border-sen-gray bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white outline-none flex-1"
+                  ></textarea>
                 </div>
               </div>
 
@@ -91,9 +120,9 @@ function deleteEvent() {
                 <button
                   type="button"
                   class="inline-flex justify-center rounded-md border border-transparent bg-flsp-light_blue px-4 py-2 text-sm font-medium text-flsp-dark_blue hover:bg-flsp-medium_blue focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                  @click="closeModal"
+                  @click="calendarStore.eventDetailsModal(calendarStore.selectedEvent)"
                 >
-                  Fermer
+                  Modifier
                 </button>
               </div>
             </DialogPanel>
