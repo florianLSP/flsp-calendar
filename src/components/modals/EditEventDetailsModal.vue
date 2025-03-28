@@ -2,10 +2,11 @@
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
 import { XMarkIcon, Bars3BottomLeftIcon } from '@heroicons/vue/24/solid'
 import { useCalendarStore } from '@/stores/calendar'
-import { ref } from 'vue'
+import { onMounted, ref, type Ref } from 'vue'
 
 const calendarStore = useCalendarStore()
-const date = ref()
+const date: Ref<Date | null> = ref(null)
+
 function closeModal() {
   calendarStore.isEventClicked = false
   calendarStore.openEditEventDetailsModal = false
@@ -18,6 +19,19 @@ function deleteEvent() {
   )
   closeModal()
 }
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('fr-FR')
+}
+
+onMounted(() => {
+  if (calendarStore.selectedEvent?.date) {
+    const { day, month, year } = calendarStore.selectedEvent.date
+    date.value = new Date(year, month - 1, day)
+  } else {
+    date.value = new Date()
+  }
+})
 </script>
 <template>
   <TransitionRoot appear :show="calendarStore.openEditEventDetailsModal" as="template">
@@ -69,17 +83,8 @@ function deleteEvent() {
                   v-model="date"
                   teleport="body"
                   :enable-time-picker="false"
-                  locale="fr"
+                  :format="formatDate"
                 ></VueDatePicker>
-                <p>
-                  <span v-if="calendarStore.selectedEvent.date.day < 10">0</span
-                  >{{ calendarStore.selectedEvent.date.day }}/<span
-                    v-if="calendarStore.selectedEvent.date.month < 10"
-                    >0</span
-                  >{{ calendarStore.selectedEvent.date.month }}/{{
-                    calendarStore.selectedEvent.date.year
-                  }}
-                </p>
 
                 <div class="flex items-center space-x-4">
                   <Bars3BottomLeftIcon class="h-5 w-5" />
