@@ -2,9 +2,10 @@
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
 import { XMarkIcon, Bars3BottomLeftIcon } from '@heroicons/vue/24/solid'
 import { useCalendarStore } from '@/stores/calendar'
+import { ref } from 'vue'
 
 const calendarStore = useCalendarStore()
-
+const date = ref()
 function closeModal() {
   calendarStore.isEventClicked = false
   calendarStore.openEditEventDetailsModal = false
@@ -64,6 +65,12 @@ function deleteEvent() {
               </DialogTitle>
 
               <div class="mt-4 w-full space-y-1">
+                <VueDatePicker
+                  v-model="date"
+                  teleport="body"
+                  :enable-time-picker="false"
+                  locale="fr"
+                ></VueDatePicker>
                 <p>
                   <span v-if="calendarStore.selectedEvent.date.day < 10">0</span
                   >{{ calendarStore.selectedEvent.date.day }}/<span
