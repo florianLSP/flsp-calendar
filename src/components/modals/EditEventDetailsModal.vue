@@ -31,7 +31,7 @@ function formatDate(date: Date) {
 }
 
 function editEvent() {
-  if (calendarStore.selectedEvent) {
+  if (calendarStore.selectedEvent && modifiedTitle.value) {
     if (modifiedTitle.value == calendarStore.selectedEvent.title) {
       alertMessage.value = 'Le titre ne peut pas être identique au précédent'
       showAlertInfo.value = true
@@ -74,6 +74,17 @@ watch(date, (newDate) => {
       month: newDate.getMonth() + 1,
       year: newDate.getFullYear(),
     }
+  }
+})
+
+watch(modifiedTitle, () => {
+  if (modifiedTitle.value && modifiedTitle.value.length >= 25) {
+    alertMessage.value = "Le titre de l'événement ne peut pas dépasser 25 caractères."
+    showAlertInfo.value = true
+    setTimeout(() => {
+      showAlertInfo.value = false
+    }, 5000)
+    return
   }
 })
 </script>
