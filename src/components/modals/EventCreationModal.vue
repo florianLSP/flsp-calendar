@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
 import { useCalendarStore } from '@/stores/calendar'
 import { XMarkIcon, Bars3BottomLeftIcon } from '@heroicons/vue/24/solid'
@@ -9,6 +9,7 @@ const calendarStore = useCalendarStore()
 const titleEvent = ref('')
 const descriptionEvent = ref()
 const showAlertInfo = ref(false)
+const alertMessage = ref()
 
 function closeModal() {
   calendarStore.openEventCreationModal = false
@@ -16,6 +17,7 @@ function closeModal() {
 
 function createNewEvent() {
   if (titleEvent.value == '') {
+    alertMessage.value = "L'événement doit avoir un titre !"
     showAlertInfo.value = true
     setTimeout(() => {
       showAlertInfo.value = false
@@ -36,6 +38,17 @@ function createNewEvent() {
   titleEvent.value = ''
   descriptionEvent.value = ''
 }
+
+watch(titleEvent, () => {
+  if (titleEvent.value.length >= 25) {
+    alertMessage.value = "Le titre de l'événement ne peut pas dépasser 25 caractères."
+    showAlertInfo.value = true
+    setTimeout(() => {
+      showAlertInfo.value = false
+    }, 5000)
+    return
+  }
+})
 </script>
 <template>
   <TransitionRoot appear :show="calendarStore.openEventCreationModal" as="template">
@@ -67,7 +80,7 @@ function createNewEvent() {
             leave-from-class="opacity-100"
             leave-to-class="opacity-0"
           >
-            <AlertInfo v-if="showAlertInfo" />
+            <AlertInfo v-if="showAlertInfo" :alertMessage="alertMessage" />
           </Transition>
         </div>
         <div class="flex min-h-full items-center justify-center p-4 text-center">
