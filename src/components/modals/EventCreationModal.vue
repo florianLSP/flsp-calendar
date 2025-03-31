@@ -10,6 +10,7 @@ const titleEvent = ref('')
 const descriptionEvent = ref()
 const showAlertInfo = ref(false)
 const alertMessage = ref()
+const titleNbChar = ref(0)
 
 function closeModal() {
   calendarStore.openEventCreationModal = false
@@ -40,6 +41,7 @@ function createNewEvent() {
 }
 
 watch(titleEvent, () => {
+  titleNbChar.value = titleEvent.value.length
   if (titleEvent.value.length >= 25) {
     alertMessage.value = "Le titre de l'événement ne peut pas dépasser 25 caractères."
     showAlertInfo.value = true
@@ -104,15 +106,22 @@ watch(titleEvent, () => {
                 Nouvel événement
               </DialogTitle>
               <div class="mt-4 w-full space-y-4">
-                <input
-                  type="text"
-                  name="name"
-                  v-model="titleEvent"
-                  placeholder="Ajouter un titre à l'événement"
-                  maxlength="25"
-                  class="w-full mt-1 p-2 border focus:ring-0 rounded-lg focus:ring-flsp-light_gray focus:border-flsp-light_gray bg-gray-50 outline-none flex-1"
-                  :class="showAlertInfo ? 'border-flsp-medium_red duration-200 border-2' : 'border'"
-                />
+                <div class="relative">
+                  <input
+                    type="text"
+                    name="name"
+                    v-model="titleEvent"
+                    placeholder="Ajouter un titre à l'événement"
+                    maxlength="25"
+                    class="w-full mt-1 p-2 border focus:ring-0 rounded-lg focus:ring-flsp-light_gray focus:border-flsp-light_gray bg-gray-50 outline-none flex-1 pr-8"
+                    :class="
+                      showAlertInfo ? 'border-flsp-medium_red duration-200 border-2' : 'border'
+                    "
+                  />
+                  <p class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 text-sm">
+                    {{ titleNbChar }}/25
+                  </p>
+                </div>
 
                 <div class="flex items-center space-x-4">
                   <Bars3BottomLeftIcon class="h-5 w-5" />

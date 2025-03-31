@@ -12,6 +12,7 @@ const modifiedTitle = ref(calendarStore.selectedEvent?.title)
 const modifiedDescription = ref()
 const showAlertInfo = ref(false)
 const alertMessage = ref()
+const titleNbChar = ref(0)
 
 function closeModal() {
   calendarStore.isEventClicked = false
@@ -59,6 +60,9 @@ function editEvent() {
 }
 
 onMounted(() => {
+  if (modifiedTitle.value) {
+    titleNbChar.value = modifiedTitle.value.length
+  }
   if (calendarStore.selectedEvent?.date) {
     const { day, month, year } = calendarStore.selectedEvent.date
     date.value = new Date(year, month - 1, day)
@@ -78,13 +82,16 @@ watch(date, (newDate) => {
 })
 
 watch(modifiedTitle, () => {
-  if (modifiedTitle.value && modifiedTitle.value.length >= 25) {
-    alertMessage.value = "Le titre de l'événement ne peut pas dépasser 25 caractères."
-    showAlertInfo.value = true
-    setTimeout(() => {
-      showAlertInfo.value = false
-    }, 5000)
-    return
+  if (modifiedTitle.value) {
+    titleNbChar.value = modifiedTitle.value.length
+    if (modifiedTitle.value.length >= 25) {
+      alertMessage.value = "Le titre de l'événement ne peut pas dépasser 25 caractères."
+      showAlertInfo.value = true
+      setTimeout(() => {
+        showAlertInfo.value = false
+      }, 5000)
+      return
+    }
   }
 })
 </script>
@@ -135,14 +142,19 @@ watch(modifiedTitle, () => {
               />
               <DialogTitle class="leading-6 text-gray-900 capitalize flex items-center w-3/4">
                 <!--:class="showAlertInfo ? 'border-flsp-medium_red duration-200 border-2' : 'border'"-->
-                <input
-                  type="text"
-                  name="name"
-                  v-model="modifiedTitle"
-                  placeholder="Ajouter un titre à l'événement"
-                  maxlength="25"
-                  class="w-full mt-1 p-2 border focus:ring-0 rounded-lg focus:ring-flsp-light_gray focus:border-flsp-light_gray bg-gray-50 outline-none flex-1"
-                />
+                <div class="relative">
+                  <input
+                    type="text"
+                    name="name"
+                    v-model="modifiedTitle"
+                    placeholder="Ajouter un titre à l'événement"
+                    maxlength="25"
+                    class="w-full mt-1 p-2 border focus:ring-0 rounded-lg focus:ring-flsp-light_gray focus:border-flsp-light_gray bg-gray-50 outline-none flex-1"
+                  />
+                  <p class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 text-sm">
+                    {{ titleNbChar }}/25
+                  </p>
+                </div>
               </DialogTitle>
 
               <div class="mt-4 w-full space-y-1">
