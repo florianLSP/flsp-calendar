@@ -9,7 +9,7 @@ import AlertInfo from '../AlertInfo.vue'
 const calendarStore = useCalendarStore()
 const date: Ref<Date | null> = ref(null)
 const modifiedTitle = ref(calendarStore.selectedEvent?.title)
-const modifiedDescription = ref()
+const modifiedDescription = ref(calendarStore.selectedEvent?.description)
 const showAlertInfo = ref(false)
 const alertMessage = ref()
 const titleNbChar = ref(0)
