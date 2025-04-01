@@ -69,7 +69,7 @@ function deleteEvent() {
                   >{{ calendarStore.selectedEvent.date.day }}/<span
                     v-if="calendarStore.selectedEvent.date.month < 10"
                     >0</span
-                  >{{ calendarStore.selectedEvent.date.month }}/{{
+                  >{{ calendarStore.selectedEvent.date.month + 1 }}/{{
                     calendarStore.selectedEvent.date.year
                   }}
                 </p>
