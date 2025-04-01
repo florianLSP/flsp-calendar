@@ -74,8 +74,8 @@ function deleteEvent() {
                   }}
                 </p>
                 <div class="flex items-center space-x-4">
-                  <Bars3BottomLeftIcon class="h-5 w-5" />
-                  <p>{{ calendarStore.selectedEvent.description }}</p>
+                  <Bars3BottomLeftIcon class="h-5 w-5 flex-shrink-0" />
+                  <p class="flex-1 break-words">{{ calendarStore.selectedEvent.description }}</p>
                 </div>
               </div>
 
